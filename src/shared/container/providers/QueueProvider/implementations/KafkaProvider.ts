@@ -1,5 +1,5 @@
-import appConsumers from '@infra/consumers';
 import { Kafka } from 'kafkajs';
+import appConsumers from '@infra/consumers';
 
 import IQueueConsumer from '../models/IQueueConsumer';
 import IQueueMessage from '../models/IQueueMessage';
@@ -29,6 +29,15 @@ export default class KafkaProvider implements IQueueProvider {
   }
 
   public async producer(topic: string, messages: IQueueMessage): Promise<void> {
+    console.log({
+      clientId: process.env.KAFKA_CLIENT_ID,
+      brokers: [process.env.KAFKA_BROKERS],
+    });
+    this.client = new Kafka({
+      clientId: process.env.KAFKA_CLIENT_ID,
+      brokers: [process.env.KAFKA_BROKERS],
+    });
+
     const producer = this.client.producer({});
 
     await producer.connect();
