@@ -2,9 +2,7 @@ version: '3.7'
 
 services:
   dev-aurora-pets-service:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: aurora-pets-service:dev
 
     env_file:
       - .env
