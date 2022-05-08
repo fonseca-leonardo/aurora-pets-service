@@ -14,9 +14,17 @@ export default class BreedRepository {
     return breeds;
   }
 
-  public async specieBreeds(specieId: string) {
+  public async specieBreeds(specieId: string, search?: string) {
     const breeds = await this.breedRepository.findMany({
-      where: { specieId },
+      where: {
+        specieId,
+        ...(search && {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        }),
+      },
       select: {
         id: true,
         name: true,

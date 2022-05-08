@@ -11,7 +11,9 @@
       "@dtos/*": ["dtos/*"],
       "@infra/*": ["infra/*"],
       "@services/*": ["services/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@config/*": ["config/*"],
+
     },
     "lib": ["esnext"],
     "typeRoots": [

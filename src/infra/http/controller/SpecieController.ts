@@ -1,5 +1,5 @@
-import CreateSpecieService from '@services/CreateSpecieService';
-import ListAllSpeciesService from '@services/ListAllSpeciesService';
+import CreateSpecieService from '@services/Specie/CreateSpecieService';
+import ListAllSpeciesService from '@services/Specie/ListAllSpeciesService';
 import { Request, Response } from 'express';
 
 export default class SpecieController {
