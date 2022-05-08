@@ -7,6 +7,8 @@ import queueProvider from '@shared/container/providers/QueueProvider';
 async function main() {
   await queueProvider.init();
 
+  console.log(process.env.KAFKA_BROKERS);
+
   console.log('✅ QUEUE PROVIDER INITIALIZED');
 
   await queueProvider.producer('test', {
