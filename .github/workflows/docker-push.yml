@@ -30,4 +30,4 @@ jobs:
       run: docker build . --file Dockerfile --tag leonardof45/aurora-pets-service:${{ steps.extract_branch.outputs.branch }}
       
     - name: Docker Push
-      run: docker push chamodshehanka/node-test
+      run: docker push leonardof45/aurora-pets-service:${{ steps.extract_branch.outputs.branch }}
