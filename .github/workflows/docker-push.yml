@@ -37,3 +37,4 @@ jobs:
         context: .
         push: true
         tags: ${{ steps.extract_branch.outputs.branch }}
+        labels: ${{ steps.meta.outputs.labels }}
