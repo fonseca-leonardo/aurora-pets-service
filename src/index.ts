@@ -11,9 +11,14 @@ async function main() {
 
   console.log('✅ QUEUE PROVIDER INITIALIZED');
 
-  await queueProvider.producer('test', {
-    value: '✅ QUEUE PRODUCER WOKRING! ',
-  });
+  try {
+    await queueProvider.producer('test', {
+      value: '✅ QUEUE PRODUCER WOKRING! ',
+    });
+  } catch (error) {
+    console.log(error);
+    console.log('❌ QUEUE PROVIDER NOT INITIALIZED');
+  }
 
   const server = new HTTPServer();
 
