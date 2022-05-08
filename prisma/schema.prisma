@@ -11,18 +11,34 @@ datasource db {
 }
 
 model Pet {
-  id         String   @id @default(uuid())
-  name       String
-  ongId      String
-  specieId   String
-  adoptable  Boolean  @default(false)
-  breedId    String?
-  ownerId    String?
-  firstPhoto String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
-  specie     Specie   @relation(fields: [specieId], references: [id])
-  breed      Breed?   @relation(fields: [breedId], references: [id])
+  id           String          @id @default(uuid())
+  name         String
+  ongId        String
+  specieId     String
+  adoptable    Boolean         @default(false)
+  breedId      String?
+  ownerId      String?
+  description  String?
+  firstPhotoId String?         @unique
+  birthDate    DateTime?
+  weight       Float?
+  gender       Gender
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now()) @updatedAt
+  specie       Specie          @relation(fields: [specieId], references: [id])
+  breed        Breed?          @relation(fields: [breedId], references: [id])
+  petTags      PetTagsOnPets[]
+  petPhotos    PetPhoto[]      @relation(name: "petPhotos", map: "petPhotos_fk")
+  firstPhoto   PetPhoto?       @relation(name: "firstPhoto", fields: [firstPhotoId], references: [id], map: "firstPhoto_fk")
+}
+
+model PetPhoto {
+  id            String   @id @default(uuid())
+  path          String
+  petId         String
+  createdAt     DateTime @default(now())
+  pet           Pet      @relation(name: "petPhotos", fields: [petId], references: [id], map: "petPhotos_fk")
+  firstPhotoPet Pet?     @relation(name: "firstPhoto", map: "firstPhoto_fk")
 }
 
 model Breed {
@@ -41,5 +57,35 @@ model Specie {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   breeds    Breed[]
-  Pet       Pet[]
+  pets      Pet[]
+}
+
+model PetTag {
+  id        String          @id @default(uuid())
+  name      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @default(now()) @updatedAt
+  pets      PetTagsOnPets[]
+}
+
+model PetTagsOnPets {
+  petId     String
+  petTagId  String
+  createdAt DateTime @default(now())
+  pet       Pet      @relation(fields: [petId], references: [id])
+  petTag    PetTag   @relation(fields: [petTagId], references: [id])
+
+  @@id([petId, petTagId])
+}
+
+model PetWeightHistory {
+  id        String   @id @default(uuid())
+  petId     String
+  weight    Float
+  createdAt DateTime @default(now())
+}
+
+enum Gender {
+  male
+  female
 }

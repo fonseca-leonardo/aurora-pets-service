@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Pet" ADD CONSTRAINT "firstPhoto_fk" FOREIGN KEY ("firstPhotoId") REFERENCES "PetPhoto"("id") ON DELETE SET NULL ON UPDATE CASCADE;

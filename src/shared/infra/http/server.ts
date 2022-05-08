@@ -8,7 +8,12 @@ import { isCelebrateError } from 'celebrate';
 import errorMessages from '@constants/errorMessages';
 import ServerError from '@shared/errors/ServerError';
 import handleResponse from './middlewares/handleResponse';
-import { breedRouter, specieRouter } from '@infra/http/routes';
+import {
+  breedRouter,
+  petsRouter,
+  petTagsRouter,
+  specieRouter,
+} from '@infra/http/routes';
 
 export default class HTTPServer {
   private server: Express;
@@ -31,6 +36,8 @@ export default class HTTPServer {
 
     this.server.use('/api/v1/species', specieRouter);
     this.server.use('/api/v1/breeds', breedRouter);
+    this.server.use('/api/v1/pets', petsRouter);
+    this.server.use('/api/v1/pet-tags', petTagsRouter);
   }
 
   public async init() {
@@ -49,6 +56,18 @@ export default class HTTPServer {
         _: NextFunction,
       ) => {
         if (isCelebrateError(err)) {
+          const query = err.details.get('query');
+
+          if (query) {
+            return response.status(400).formatedJson(
+              {},
+              {
+                message: query.details[0].message,
+                success: false,
+              },
+            );
+          }
+
           return response.status(400).formatedJson(
             {},
             {
@@ -63,6 +82,8 @@ export default class HTTPServer {
             .status(err.statusCode)
             .formatedJson({}, { message: err.message, success: false });
         }
+
+        console.log(err);
 
         return response.status(500).formatedJson(
           {},

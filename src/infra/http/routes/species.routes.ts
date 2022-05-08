@@ -7,7 +7,7 @@ const specieController = new SpecieController();
 
 const router = Router();
 
-router.get('/all', authentication, specieController.show);
+router.get('/all', specieController.show);
 
 router.post(
   '/',

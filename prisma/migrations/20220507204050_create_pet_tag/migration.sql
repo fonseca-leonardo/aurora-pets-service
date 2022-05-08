@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "PetTags" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "petId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "PetTags_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "PetTags" ADD CONSTRAINT "PetTags_petId_fkey" FOREIGN KEY ("petId") REFERENCES "Pet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

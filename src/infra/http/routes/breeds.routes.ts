@@ -19,6 +19,6 @@ router.post(
   specieController.store,
 );
 
-router.get('/:specieId', authentication, specieController.show);
+router.get('/:specieId', specieController.show);
 
 export default router;
